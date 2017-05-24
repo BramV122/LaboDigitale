@@ -1,6 +1,7 @@
 \documentclass[a4paper, 12pt]{article}
 \usepackage{geometry}
 \usepackage{graphicx}
+\usepackage{mathtools}
 \usepackage[utf8]{inputenc}
 \geometry{margin=1in}
 
@@ -21,7 +22,40 @@
 
 \newpage
 
+\section{\underline{Opgave 1}}
 
+\subsection{Identificeer het onbekende systeem door toepassing van de methode van Ziechler en Nichols.}
 
+\begin{table}[!h]
+\begin{large}
+\centering
+\resizebox{\columnwidth}{!}{
+	\begin{tabular}{p{0.5\linewidth} p{0.5\linewidth}}
+	$10s -> 2,5cm$ \\
+	$\tau\textsubscript{v} = 0,6cm$ & $\tau = 3,7cm$ \\
+	$\tau\textsubscript{v} = 0,6cm * \frac{10s}{2,5cm} = 2,4cm$ & $\tau = 3,7cm * \frac{10s}{2,5cm} = 14,8s$ \\
+	$K\textsubscript{v} = 2$ \\ [2ex]
+	$H(p) = \frac{2e^-2,4p}{1+14,8p}$
+	\end{tabular} 
+}
+\end{large}
+\end{table}
+
+\subsection{Bepaal de gepaste regelaars voor een regeling hetzij storing met 20\% doorschot}
+
+\begin{table}[!h]
+\begin{large}
+\centering
+\resizebox{\columnwidth}{!}{
+	\begin{tabular}{p{0.5\linewidth} p{0.5\linewidth}}
+	$\frac{\tau}{\tau\textsubscript{v}} = \frac{14,8s}{2,4s} = 5,92$ & $3,3 < PID < 7,4 ->$ dus we gebruiken een PID regelaar \\ [3ex]
+	Regelaar & Storing \\
+	$K\textsubscript{R} = 0,95 * \frac{1}{K\textsubscript{p}} * \frac{\tau}{\tau\textsubscript{v}} = 2,812$ & $K\textsubscript{R} = 1,2 * \frac{1}{K\textsubscript{p}} * \frac{\tau}{\tau\textsubscript{v}} = 3,552$ \\
+	$\tau\textsubscript{i} = 1,35\tau = 19,98s$ & $\tau\textsubscript{i} = 2\tau = 4,8s$ \\
+	$\tau\textsubscript{d} = 0,47\tau\textsubscript{v} = 1,128s$ & $\tau\textsubscript{d} = 0,42\tau\textsubscript{v} = 1,008s$ \\
+	\end{tabular}
+}
+\end{large}
+\end{table}
 
 \end{document}
