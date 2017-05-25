@@ -41,6 +41,13 @@
 \end{large}
 \end{table}
 
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo1_1.jpg}
+	\caption{Gebruikte werkmethode}
+\end{figure}	
+	
+\newpage
+
 \subsection{Bepaal de gepaste regelaars voor een regeling hetzij storing met 20\% doorschot}
 
 \begin{table}[!h]
@@ -57,5 +64,48 @@
 }
 \end{large}
 \end{table}
+Deze formules komen uit de tabel 5.1 uit de cursus voor een systeem met minimale oscillatieduur en 20\% doorschot.
+
+\subsection{Simuleer de stapweergave van het geïdentificeerd systeem in open lus en vergelijk dit met de stapweergave van het ongekend systeem. Beoordeel de kwaliteit van de benadering.}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo1_3_systeem.jpg}
+	\caption{Figuur van het gebruikte simulink schema}
+\end{figure}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo1_3_scoop.jpg}
+	\caption{Simulatie van het onbekende en berekende systeem}
+	\label{fig:scoop3.1}
+\end{figure}
+
+\newpage
+
+Figuur \ref{fig:scoop3.1} toont ons de simulatie van het onbekende systeem en het berekende model. In deze figuur is de zwarte figuur het onbekende systeem en de rode figuur onze benaderend model. \\
+Uit deze simulatie kunnen we besluiten dat onze dode tijd vrij goed lijkt te kloppen maar dat de benaderende simulatie wel trager verloopt als het onbekende systeem. We kunnen dan ook besluiten dat $\tau$ kleiner zal moeten zijn om een betere overeenkomst te bekomen. \\
+Als we iteratief naar deze $\tau$ zouden toewerken, dit wil zeggen een steeds kleinere $\tau$ nemen tot dat deze lijkt te kloppen, zouden we op ongeveer $\tau = 12$ uitkomen. Het resultaat hiervan zien we in figuur \ref{fig:scoop3.2}.
+
+\begin{figure}[!h]
+	\includegraphics[width=0.9\linewidth]{Labo1_3_scoop2.jpg}
+	\caption{Simulatie van het onbekende en berekende systeem na iteratief aanpassen van $\tau$}
+	\label{fig:scoop3.2}
+\end{figure}
+
+\newpage
+
+\subsection{Simuleer de reactie van het systeem in gesloten lus met toepassing van de regelaars en vergelijk weerom met de stapweergave van het werkelijk systeem bij deze regelaarsinstelling}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo1_4_systeem.jpg}
+	\caption{Figuur van het gebruikte simulink schema met regelaar}
+\end{figure}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo1_4_scoop.jpg}
+	\caption{Simulatie van het onbekende en berekende systeem met regelaar}
+	\label{fig:scoop4.1}
+\end{figure}
+
+Figuur \ref{fig:scoop4.1} geeft de simulatie weer. De gebruikte kleuren zijn dezelfde als in de vorige figuren. De regelaar bij het onbekende systeem zorgt voor minder oscillaties dan bij het berekende systeem, wat nogmaals wijst dat ons berekende systeem niet perfect overeenkomt. Ook heeft het berekende systeem een paar rare uitschieters die niet in het originele systeem terug te vinden zijn.
 
 \end{document}
