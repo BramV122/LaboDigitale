@@ -2,9 +2,11 @@
 
 \usepackage{graphicx}
 \usepackage{amssymb}
+\usepackage{bm}
 \usepackage[utf8]{inputenc}
 
 \begin{document}
+\part{Aan/uit positiecontrole van een motor}
 \section{Introductie}
 Volgend systeem beschrijft een motor met aan/uit-regeling. Dit systeem bestaat uit een lineair en niet-lineair deel. De regelkring wordt weergegeven in figuur \ref{regellus}.
 \begin{figure}[!h]
@@ -136,19 +138,53 @@ De totale hysteresisbreedte is $2D = 0.074612$. Deze waarde wordt ingevuld in de
 	\label{output3}
 \end{figure}
 \clearpage
-
-
 \subsection{Vergelijking van verschillende simulaties}
-%\begin{figure}
-%	\centering
-%	\includegraphics[height=0.4\textheight, keepaspectratio]{xydrienohys.png}
-%	\caption{$\theta(\omega)$ voor verschillende beginposities (geen hysteresis)}
-%	\label{•}
-%\end{figure}
-
-
-
-
+Voor het vergelijken van de simulaties werden er 9 curves getekend. Deze grafieken werden gegroepeerd in 3 grafieken met elk 3 curves. Dit met behulp van volgende indeling:
+\begin{itemize}
+	\item Curves zonder hysteresis
+	\item Curves met hysteresis $D = \pm 1$
+	\item Curves met hysteresis $D = \pm 0.5$
+\end{itemize}
+In deze grafieken worden telkens 3 curves getekend met verschillende beginposities. Deze posities zijn de volgende:
+\begin{table}[!h]
+\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{kleur} & $\bm{\theta}$ & $\bm{\omega}$ \\
+		\hline
+		roze & 0.5 & 1.5 \\
+		blauw & 1 & 1 \\
+		rood & 1 & 1.5 \\
+		\hline
+	\end{tabular}
+\end{table} \\
+Hieruit vallen enkele zaken op te merken:
+\begin{itemize}
+	\item De beginpositie heeft geen invloed op de limietcyclus. Dit zowel bij de simulaties met hysteresis als bij de simulaties zonder. Men spreekt hier van stabiele limietcyclussen.
+	\item De hysteresisbreedte blijkt invloed te hebben op de limietcyclus. Dit is ook logisch, gezien de hysteresisbreedte uiteindelijk zorgt voor de amplitude van de limietcyclus. Een lagere hysteresisbreedte zorgt ervoor dat het systeem zich sneller zal willen corrigeren naar de setwaarde, met minder afwijking tot gevolg.
+	\item De link tussen de hysteresisbreedte en de oscillatieduur werd eerder verklaard.
+\end{itemize}
+\clearpage
+\begin{figure}
+	\centering
+	\includegraphics[height=0.4\textheight, keepaspectratio]{xydrienohys.png}
+	\caption{$\theta(\omega)$ voor verschillende beginposities (geen hysteresis)}
+	\label{xydrienohys}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[height=0.4\textheight, keepaspectratio]{xydriehys.png}
+	\caption{$\theta(\omega)$ voor verschillende beginposities (met hysteresis $\pm 1$)}
+	\label{xydriehys}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[height=0.4\textheight, keepaspectratio]{xydriehyssmaller.png}
+	\caption{$\theta(\omega)$ voor verschillende beginposities (met hysteresis $\pm 0.5$)}
+	\label{xydriehys}
+\end{figure}
+\clearpage
+\part{Aan/uit voor temperatuursregeling van doorstromer}
 
 
 
