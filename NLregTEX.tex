@@ -2,7 +2,9 @@
 
 \usepackage{graphicx}
 \usepackage{amssymb}
+\usepackage{gensymb}
 \usepackage{bm}
+\usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 
 \begin{document}
@@ -15,7 +17,6 @@ Volgend systeem beschrijft een motor met aan/uit-regeling. Dit systeem bestaat u
 	\caption{Regellus voor Aan/uit positieregeling}
 	\label{regellus}	
 \end{figure}
-
 \noindent
 Het niet-lineaire deel bestaat uit het aan/uit-element. Deze schakelt tussen de waarden +1 en -1 om de motor respectievelijk positief en negatief te laten draaien. De motor zelf is een eerste orde systeem met transfertfunctie $TF_{motor} = \frac{1}{p+1}$. Hieruit volgt dat $K=1$ en $\tau=1$. Gezien de hoekpositie graag gekend is wordt er tenslotte een zuivere integrator toegevoegd. Immers geldt dat $\theta = \int_{\Delta t} \omega \ \mathrm{d}t$. \\ \\
 \section{Simulatie}
@@ -185,8 +186,29 @@ Hieruit vallen enkele zaken op te merken:
 \end{figure}
 \clearpage
 \part{Aan/uit voor temperatuursregeling van doorstromer}
+\setcounter{section}{0}
+\section{Introductie}
+Voor de aan/uit temperatuursregeling bij een doorstromer wordt gebruik gemaakt van volgende gegevens:
+\begin{itemize}
+	\item De variatie rond het werkingspunt bedraagt 13.9\degree C
+	\item De tijdsconstante van het proces is 1 minuut
+	\item De tijdsconstante van de temperatuursensor bedraagt een halve minuut
+\end{itemize}
+Dit regelschema wordt afgebeeld op figuur \ref{sys2}
+\begin{figure}[!h]
+	\includegraphics[width=\textwidth ,keepaspectratio]{systeem2.png}
+	\centering
+	\caption{Temperatuursregeling - regelschema}
+	\label{sys2}
+\end{figure} \\
+Om voor dit schema het fasetraject op te stellen dienen de beginwaarden opnieuw instelbaar te zijn. Dit is mogelijk door de transferfunctie nogmaals op te splitsen in een functie met 2 zuivere integrators. Dit werd gedaan met behulp van het schema uit figuur \ref{schema2}. Er werd een stap aangelegd aan zowel de originele transferfunctie als de zelf geconstrueerde transferfunctie met zuivere integrators. Dit resultaat werd vergeleken in een grafiek alsook in een controlestructuur. Deze controlestructuur toont een 1 op het oscilloscoopbeeld indien beide signalen op elk punt gelijk zijn. Na controle bleek dit het geval te zijn.
 
-
+\begin{figure}[!h]
+	\includegraphics[width=\textwidth ,keepaspectratio]{schema2.png}
+	\centering
+	\caption{Equivalent schema temperatuursregeling met controle}
+	\label{schema2}
+\end{figure} 
 
 
 
