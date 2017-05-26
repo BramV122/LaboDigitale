@@ -49,11 +49,11 @@ Deze code geeft volgend resultaat.
 
 \begin{figure}[!h]
 	\includegraphics[width=1\linewidth]{Labo3_step_response.jpg}
-	\caption{Stepresponse van het analoog en de 5 discrete systemen}
+	\caption{Stepresponse van het continu en de 5 discrete systemen}
 	\label{fig:Labo3_step_response}
 \end{figure}
 
-Op deze figuur zien we niet veel. Wat wel wel zien is dat ruw gezien alle discrete equivalenten het analoog systeem lijken te volgen.\\
+Op deze figuur zien we niet veel. Wat wel wel zien is dat ruw gezien alle discrete equivalenten het continu systeem lijken te volgen.\\
 Maar we gaan deze figuur toch in wat meer detail bekijken.
 
 \begin{figure}[H]
@@ -68,8 +68,131 @@ Figuur \ref{fig:Labo3_step_response_zoom} geeft een beter beeld op figuur \ref{f
 Als we goed naar de figuur kijken kunnen we zien dat systeem d3 en d4 bijna op elkaar vallen, en dus ook bij identiek zijn. Dit zijn respectievelijk het systeem met de Trapeziumregel en het systeem met de Nulpunten/polen-transformatie.\\
 
 \underline{Welke discrete TF levert exacte digitale waarden op; dit is identiek aan de continue waarden?}\\
+De systemen die exacte digitale waarden geven zijn ook weer de trapeziumregel en de nulpunten/polen-transformatie, omdat deze systemen evenveel punten boven als onder het continu systeem hebben liggen.\\
 
 \underline{Welke twee discrete equivalenten geven een slechte benadering?}\\
-De systemen die het meest aan de buitenkant liggen en dus de slechtste benadering geven zijn: d1 en d5. Deze systemen zijn respectievelijk het systeem met de voorwaartse integratieregel en het systeem met het Houdequivalent.
+De systemen die het meest aan de buitenkant liggen en dus de slechtste benadering geven zijn: d1 en d5. Deze systemen zijn respectievelijk het systeem met de voorwaartse integratieregel en het systeem met het Houdequivalent. bijkomend aan de voorwaartse integratieregel kunnen we ook stellen dat de achterwaartse integratieregel, d2 in dit geval, een even slechte benadering geeft als de voorwaartse integratieregel. \\
+
+\newpage
+
+\begin{lstlisting}
+c1 = tf([1], [1 1])
+d6 = tf([1-exp(-1)], [1 -exp(-1)], 1)
+
+[ampl, tijd] = step(d6);
+figure, stem(tijd, ampl);
+hold on, step(c1)
+\end{lstlisting}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_step_response3.jpg}
+	\caption{stepresponse van het continu systeem met het houdequivalent}
+	\label{fig:Labo3_step_response2}
+\end{figure}
+
+Figuur \ref{fig:Labo3_step_response2} geeft	 continu systeem c1 weer plus het houdequivalent, de horizontale lijnen, voor een sampletijd van 1 seconde, dus een discreet systeem. Zoals te zien is op de figuur vallen de berekende waarden van het houdequivalent perfect samen met het continu systeem, we mogen dus besluiten dat het houdequivalent goed is naar amplitude toe.\\
+
+\begin{lstlisting}
+c1 = tf([1], [1 1])
+d1 = tf([ts], [1 -1+ts], ts)
+d2 = tf([ts/(ts+1) 0], [1 -1/(ts+1)], ts)
+d3 = tf([ts ts], [ts+2 -2+ts], ts)
+d4 = tf([1-exp(-ts) +1-exp(-ts)], [2 -2*exp(-ts)], ts)
+d5 = tf([1-exp(-ts)], [1 -exp(-ts)], ts)
+
+figure, bode(c1, d1, d2, d3, d4, d5)
+legend('c1', 'd1', 'd2', 'd3', 'd4', 'd5')
+\end{lstlisting}
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{Labo3_bode_plot}
+	\caption{bode plot van het continu systeem en zijn discrete equivalenten}
+\end{figure}
+
+\underline{Tot op welke frequentie is de benadering geldig}\\
+De benadering van discrete systemen is geldig tot op de helft van de samplefrequentie: \\
+$ts = 0,1s \rightarrow f = 10Hz \rightarrow \omega\textsubscript{s} = 2 * \pi *10Hz = 62,8\frac{rad}{s} \rightarrow \omega\textsubscript{min} = \frac{\omega\textsubscript{s}}{2} = 31,4\frac{rad}{s}$ \\
+
+\underline{Welke equivalenten geven een goede benadering (in amplitude en/of in fase) en welke niet?}\\
+De systemen die de beste benadering geven zijn toch weer de trapeziumregel en de nulpunten/polen-transformatie. De beste van deze 2 discrete equivalenten is dan nog de trapeziumregel omdat deze voor zowel amplitude- als faseverloop het continu systeem vrij goed benaderd. De nulpunten/polen-transformatie wijkt in het amplitudeverloop af tegenover het continu systeem. \\
+De systemen die de slechtste benadering geven zijn de 2 integratieregels en het houdequivalent. Deze systemen hebben wel ongeveer hetzelfde amplitudeverloop maar wijken veel af in het faseverloop bij hogere frequenties.
+
+\section{Continu naar discreet}
+
+\subsection{Bepaal de werking van deze functie (c2d) m.b.v. de help-functie}
+
+$>>$ help c2d
+
+\begin{lstlisting}
+	c2d  Converts continuous-time dynamic system to discrete time.
+ 
+    SYSD = c2d(SYSC,TS,METHOD) computes a discrete-time model SYSD with 
+    sample time TS that approximates the continuous-time model SYSC.
+    The string METHOD selects the discretization method among the following:
+       'zoh'       Zero-order hold on the inputs
+       'foh'       Linear interpolation of inputs
+       'impulse'   Impulse-invariant discretization
+       'tustin'    Bilinear (Tustin) approximation.
+       'matched'   Matched pole-zero method (for SISO systems only).
+    The default is 'zoh' when METHOD is omitted. The sample time TS should 
+    be specified in the time units of SYSC (see "TimeUnit" property).
+ 
+    c2d(SYSC,TS,OPTIONS) gives access to additional discretization options. 
+    Use C2DOPTIONS to create and configure the option set OPTIONS. For 
+    example, you can specify a prewarping frequency for the Tustin method by:
+       opt = c2dOptions('Method','tustin','PrewarpFrequency',.5);
+       sysd = c2d(sysc,.1,opt);
+ 
+    For state-space models,
+       [SYSD,G] = c2d(SYSC,Ts,METHOD)
+    also returns the matrix G mapping the states xc(t) of SYSC to the states 
+    xd[k] of SYSD:
+       xd[k] = G * [xc(k*Ts) ; u[k]]
+    Given an initial condition x0 for SYSC and an initial input value u0=u(0), 
+    the equivalent initial condition for SYSD is (assuming u(t)=0 for t<0):
+       xd[0] = G * [x0;u0] .
+\end{lstlisting}
+
+\begin{table}[!h]
+\centering
+\resizebox{\columnwidth}{!}{
+	\begin{tabular}{p{0.2\linewidth} p{0.1\linewidth} p{0.7\linewidth}}
+	zoh & = & nulde orde houdequivalent\\
+	foh & = & nulpunten/polen-transformatie \\
+	tustin & = & trapzium transformatie voor 1ste orde systeem \\
+	matched & = & houdequivalent\\
+	\end{tabular} 
+}
+\end{table}
+
+\begin{lstlisting}
+ts = 0.1;
+c1 = tf([1], [1 1])
+
+d15 = c2d(c1, ts, 'zoh')
+d16 = c2d(c1, ts, 'foh')
+d17 = c2d(c1, ts, 'matched')
+
+step(c1, d15, d16, d17)
+\end{lstlisting}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_c2d_stepresponse.jpg}
+	\caption{step response van de c2d methodes en het continu systeem}
+	\label{labo3_step_response3}
+\end{figure}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_c2d_stepresponse2.jpg}
+	\caption{ingezoomde versie van de step response van de c2d methodes en het continu systeem}
+	\label{labo3_step_response4}
+\end{figure}
+
+In figuur \ref{labo3_step_response3} en \ref{labo3_step_response4} is de stap response van de c2d functies 'zoh', 'foh' en 'matched' te zien. Hier kunnen we ook in zien dat d16 de nulpunten/polen-transformatie is en de andere 2 (die moeilijk te onderscheiden zijn omdat zo over elkaar vallen) het houdequivalent zijn.
+
+\newpage
+
+\section{Stabiliteitsanalyse}
+
 
 \end{document}
