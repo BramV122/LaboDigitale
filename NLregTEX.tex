@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
 
 \usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
 
 \begin{document}
 \section{Introductie}
@@ -15,6 +17,7 @@ Volgend systeem beschrijft een motor met aan/uit-regeling. Dit systeem bestaat u
 \noindent
 Het niet-lineaire deel bestaat uit het aan/uit-element. Deze schakelt tussen de waarden +1 en -1 om de motor respectievelijk positief en negatief te laten draaien. De motor zelf is een eerste orde systeem met transfertfunctie $TF_{motor} = \frac{1}{p+1}$. Hieruit volgt dat $K=1$ en $\tau=1$. Gezien de hoekpositie graag gekend is wordt er tenslotte een zuivere integrator toegevoegd. Immers geldt dat $\theta = \int_{\Delta t} \omega \ \mathrm{d}t$. \\ \\
 \section{Simulatie}
+\subsection{Tijdrespons en Fasetraject}
 Om deze schakeling te simuleren in SIMULINK werd gebruik gemaakt van het schema uit figuur \ref{simulinkschema}. Deze omzetting maakt het mogelijk om de beginwaarden van $\omega$ en $\theta$ te kiezen. Als beginwaarden werden gekozen:
 \[ 
 \left \{
@@ -81,6 +84,80 @@ De tijdrespons wordt afgebeeld in figuur \ref{output2}. Hierin valt duidelijk de
 	\caption{Tijdrespons (15 seconden) voor $\omega_0 = 0.75$ rad/s en $\theta_0 = 1$ rad en hysteresis = $\pm 4$)}
 	\label{output2}
 \end{figure}
+\clearpage
+\subsection{Hysteresisbreedte voor $t_{osc}$ = 2s}
+Voor de hysteresisbreedte te bepalen bij een bepaalde oscillatietijd werd gebruik gemaakt van de beschrijvende-functiemethode. Voor een aan-uit regelaar met hysteresis geldt:
+\begin{equation}
+	N = \frac{4M}{\pi * E_m} * \mathrm{e}^{-j*\omega t}
+\end{equation}
+Herschreven zodat deze ook in functie staat van de hysteresisbreedte:
+\begin{equation}
+	N = \frac{4M}{\pi * E_m} * \mathrm{e}^{-j*\arcsin(\frac{D}{E_m})}
+	\label{hbreedte}
+\end{equation} 
+Hierbij staat $M$ voor de amplitude van de hysteresislus, $D$ voor de hysteresisbreedte en $E_m$ voor de amplitude van het errorsignaal. \\ \\
+De transferfunctie van het open systeem wordt gegeven door
+\begin{equation}
+	TF_{ol} = \frac{1}{p(p+1)}
+\end{equation}
+Verder geldt dat
+\begin{equation}
+	G(j\omega) = \frac{-1}{\omega^2+1} -j\frac{1}{\omega(\omega^2+1)}
+	\label{gjomega}
+\end{equation}
+De pulsatie bij $t_{osc} = 2sec$ bedraagt $\omega = \frac{2\pi}{2sec} = \pi$. De reële en imaginaire waarden hierbij zijn dan
+
+\[ 
+\left \{
+  \begin{tabular}{c}
+  $\Re(G(j\omega)) = \frac{-1}{\pi^2+1} = -0.092000$ \\
+  $\Im(G(j\omega)) = \frac{-1}{\pi(\pi^2+1)} = -0.029284$ \\
+  \end{tabular}
+\right. 
+\]
+Om nu de juiste waarde voor de hysteresisbreedte te vinden moet het imaginair deel van vergelijking \ref{hbreedte} gelijk zijn aan deze van vergelijking \ref{gjomega}. Deze gelijkenis wordt verklaard aan de hand van figuur \ref{nyq}. Zo doende levert:
+\begin{equation}
+	\frac{-\pi * D}{4} = -0.029284
+\end{equation}
+\begin{equation}
+	D = \frac{0.0293*4}{\pi} = 0.037306
+\end{equation}
+De totale hysteresisbreedte is $2D = 0.074612$. Deze waarde wordt ingevuld in de simulatie en zorgt voor de output uit figuur \ref{output3}.
+\begin{figure}
+	\centering
+	\includegraphics[height=0.4\textheight, keepaspectratio]{nyquist.png}
+	\caption{Nyquistkromme met snijpunt waar $\omega = \pi$ rad}
+	\label{nyq}
+\end{figure}
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\textwidth, keepaspectratio]{output3.png}
+	\caption{Tijdrespons (10 seconden) met oscillatieduur van 2 seconden}
+	\label{output3}
+\end{figure}
+\clearpage
+
+
+\subsection{Vergelijking van verschillende simulaties}
+%\begin{figure}
+%	\centering
+%	\includegraphics[height=0.4\textheight, keepaspectratio]{xydrienohys.png}
+%	\caption{$\theta(\omega)$ voor verschillende beginposities (geen hysteresis)}
+%	\label{•}
+%\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
