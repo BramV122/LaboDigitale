@@ -194,5 +194,139 @@ In figuur \ref{labo3_step_response3} en \ref{labo3_step_response4} is de stap re
 
 \section{Stabiliteitsanalyse}
 
+\subsection{Bereken de marginaliteitsgrens (K\_marg)}
+
+\begin{lstlisting}
+ts = 0.040;
+G = tf([ts], [1 -1], ts);
+H = tf([1], [1 0], ts);
+openlus = G*H;
+
+rlocus(openlus)
+K = margin(openlus)
+\end{lstlisting}
+
+Deze code geeft als resultaat een nulpunten/polen diagram en een waarde voor K\_marg.
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_4_rootlocus.jpg}
+	\caption{nulpunten/polen diagram van de open lus}
+\end{figure}
+
+Verder geeft matlab via de functie 'margin()' de versterking om een marginaal stabiel systeem te bekomen. In dit geval is K\textsubscript{marg} = 25.
+
+\newpage
+
+\subsection{Toon de gesloten-lus-stapresponsie voor K\textsubscript{marg} = 25}
+
+We hebben de figuur bewust ingezoomd omdat de figuur anders niet leesbaar was.
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_4_step_response.jpg}
+	\caption{stapresponsie van de gesloten lus met k\textsubscript{marg}}
+\end{figure}
+
+\subsection{Bereken K voor 4\% doorschot ($\zeta = 0,7$) in de gesloten-lus-stapresponsie en verifieer.}
+
+Voor 4\% doorschot moeten we rekenen met een demping van 0,707.
+
+\begin{figure}[!h]
+	\includegraphics[width=0.9\linewidth]{Labo3_4_rootlocus2.jpg}
+	\caption{nulpunten/polen diagram met demping 0,707 aangeduid}
+\end{figure}
+
+Uit de figuur kunnen we aflezen dat voor een dempen van 0,707 en dus ook doorschot van 4\%, K gelijk is aan 8,5.
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_4_step_response2.jpg}
+	\caption{stap responsie van de gesloten lus voor 4\% doorschot}
+\end{figure}
+
+In de bovenstaande figuur zien we de stap responsie voor de gesloten lus van het systeem met een doorschot van 4\%. Dit kunnen we zien aan de maximale waarde die deze responsie bereikt, namelijk 1,04.
+
+\subsection{Herhaal de stappen 1 tot en met 3 voor $H(z) = 1/z^2$}
+\subsubsection{Stap 1}
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_4_rootlocus3.jpg}
+	\caption{nulpunten/polen diagram van de open lus}
+\end{figure}
+
+Verder geeft matlab via de functie 'margin()' de versterking om een marginaal stabiel systeem te bekomen. In dit geval is K\textsubscript{marg} = 15,4508.
+\subsubsection{Stap 2}
+
+We hebben de figuur bewust ingezoomd omdat de figuur anders niet leesbaar was.
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_4_step_response3.jpg}
+	\caption{stapresponsie van de gesloten lus met k\textsubscript{marg}}
+\end{figure}
+
+\subsubsection{Stap 3}
+
+Voor 4\% doorschot moeten we rekenen met een demping van 0,707.
+
+\begin{figure}[!h]
+	\includegraphics[width=0.9\linewidth]{Labo3_4_rootlocus4.jpg}
+	\caption{nulpunten/polen diagram met demping 0,707 aangeduid}
+\end{figure}
+
+Uit de figuur kunnen we aflezen dat voor een dempen van 0,707 en dus ook doorschot van 4\%, K gelijk is aan 5,08.
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_4_step_response4.jpg}
+	\caption{stap responsie van de gesloten lus voor 4\% doorschot}
+\end{figure}
+
+In de bovenstaande figuur zien we de stap responsie voor de gesloten lus van het systeem met een doorschot van 4\%. Dit kunnen we zien aan de maximale waarde die deze responsie bereikt, namelijk 1,04.
+
+\section{Simulatie digitale regellus in Simulink}
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{Labo3_5_systeem.jpg}
+	\caption{schema van de gebruikte regelkring}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{Labo3_5_stapresponse.jpg}
+	\caption{stap responsie voor een marginaal stabiel systeem}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{Labo3_5_stapresponse2.jpg}
+	\caption{stap responsie voor 4\% doorschot}
+\end{figure}
+
+\newpage
+
+\section{Bouw eveneens een regellus met een continue integrator als robot-model.}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_5_systeem2.jpg}
+	\caption{schema van de gebruikte regelkring}
+\end{figure}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_5_stapresponse3.jpg}
+	\caption{stap responsie voor 4\% doorschot}
+\end{figure}
+
+We hebben de staprespons voor een marginaal stabiel systeem niet toegevoegd omdat deze onvoldoende duidelijk was. \\
+
+We stellen vast dat als we na het Zero-order-hold blokje meten wet exact hetzelfde signaal krijgen als het discreet equivalent. Als we voor het Zero-order-hold blokje meten krijgen we een continu signaal dat toch het digitaal systeem volgt en per samplemoment een andere richtingscoëfficiënt krijgt.
+
+\section{Gebruik nu een juister robot-model welk bestaat uit een continu eerste orde systeem gevolgde coor een continue integrator}
+
+\begin{figure}[!h]
+	\includegraphics[width=1\linewidth]{Labo3_5_systeem3.jpg}
+	\caption{schema van de gebruikte regelkring}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{Labo3_5_stapresponse4.jpg}
+	\caption{stap responsie voor 4\% doorschot}
+\end{figure}
+
+In bovenstaande figuur zien we de 3 robot modellen bij elkaar. De eerste 2 hebben we al besproken. De 3de van de robot modellen zou de meest juiste moeten zijn. \\
+Toch vertoont het rode model, en dus ook het laatste model meer als 4\% doorschot. Dit komt mede doordat de de versterking niet voor dit systeem berekend is.
 
 \end{document}
