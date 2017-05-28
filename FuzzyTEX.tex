@@ -5,6 +5,7 @@
 \usepackage{listings}
 \usepackage{float}
 \usepackage[utf8]{inputenc}
+\usepackage{gensymb}
 \geometry{margin=1in}
 
 
@@ -24,7 +25,7 @@
 	\caption{tijdsverloop van de temperatuur}
 \end{figure}
 
-In bovenstaande figuren zien we dat het stuursignaal op 2 momenten verzadigd is. Namelijk tussen 0 en 12 seconden, dan is het stuursignaal 5. En tussen 17 en 22 seconden, dan is het stuursignaal 0. We kunnen aan de hand van deze tijdsperiodes en het tijdsverloop zien wanneer het stuursignaal in verzadiging gaat. Dit is namelijk als de temperatuur lager is als $20^\circ$C en hoger als $24^\circ$C. Dit is niet toevallig $2^\circ$C hoger en lager als de ingestelde waarden. Dit is namelijk ingesteld in de regelaar. Dus als we als nieuwe instelwaarde $30^\circ$C zouden nemen, dan zal het stuursignaal in verzadiging gaan als de temperatuur lager is als $28^\circ$C en hoger is als $32^\circ$C.
+In bovenstaande figuren zien we dat het stuursignaal op 2 momenten verzadigd is. Namelijk tussen 0 en 12 seconden, dan is het stuursignaal 5. En tussen 17 en 22 seconden, dan is het stuursignaal 0. We kunnen aan de hand van deze tijdsperiodes en het tijdsverloop zien wanneer het stuursignaal in verzadiging gaat. Dit is namelijk als de temperatuur lager is dan $20^\circ$C en hoger dan $24^\circ$C. Dit is niet toevallig $2^\circ$C hoger en lager als de ingestelde waarden. Dit is namelijk ingesteld in de masks in de fuzzyficatiestap. Deze leveren een interval in hoeverre de setwaarde overeenstemt met die specifieke toestand (te warm / ok / te koud). Dus als we als nieuwe instelwaarde $30^\circ$C zouden nemen, dan zal het stuursignaal in verzadiging gaan als de temperatuur lager is als $28^\circ$C en hoger is als $32^\circ$C.
 
 \subsection{Voeg een scoop toe en observeer tegelijkertijd de signalen 'TE WARM', 'GOED' en 'TE KOUD'.}
 
@@ -32,7 +33,7 @@ In bovenstaande figuren zien we dat het stuursignaal op 2 momenten verzadigd is.
 	\includegraphics[width=1\linewidth]{Labo4_1_signals.jpg}
 	\caption{tijdsverloop van de signalen 'TE WARM', 'GOED' en 'TE KOUD}
 \end{figure}
-
+\noindent Deze grafiek komt overeen met het tijdsverloop van de temperatuur in de vorige grafiek. Eerst werd de gegevenstemperatuur als 'te koud' gezien ten opzichte van de setwaarde ($<2 \degree C$). Na enige tijd begint de kamer op te warmen en bevindt de temperatuur zich in een deel 'te koud' en een deel 'goed'. Door de relatief trage regelaar zal de temperatuur een deel boven de setwaarde terecht komen. In dit geval zit ze in de overgangszone van 'goed' en 'te warm'. Deze trend zet zich voort totdat de temperatuur de setwaarde bereikt heeft. 
 \newpage
 
 \subsection{Bekijk de ingangs/uitgangskarakteristiek van de fuzzy-regelaar m.b.v. het "test\_regelaar"-model. Dit model simuleert het verband tussen fout en stuursignaal. Voor de begininstelling komt dit overeen met een propotionele regelaar met verzadiging volgens figuur 8.2a.}
@@ -48,12 +49,12 @@ In bovenstaande figuren zien we dat het stuursignaal op 2 momenten verzadigd is.
 	\caption{in/uit-karakteristiek}
 	\label{fig:in/uit}
 \end{figure}
-
 \newpage
+\noindent Op Figuur \ref{fig:in/uit} kunnen we zien dat de helling van de in/uit karakteristiek zich tussen -2 en 2 op de x-as bevindt en zich 5 eenheden in de y-richting verplaatst. \\
 
-Op Figuur \ref{fig:in/uit} kunnen we zien dat de helling van de in/uit karakteristiek zich tussen -2 en 2 op de x-as bevind en zich 5 eenheden in de y-richting verplaatst. \\
-
-$K\textsubscript{r} = \frac{5}{2-(-2)} = \frac{5}{4} = 1,25$ \\
+\begin{equation}
+	K\textsubscript{r} = \frac{5}{2-(-2)} = \frac{5}{4} = 1.25
+\end{equation}
 
 \begin{figure}[!h]
 	\includegraphics[width=1\linewidth]{Labo4_1_regellus_kamer_kp.jpg}
@@ -67,14 +68,13 @@ $K\textsubscript{r} = \frac{5}{2-(-2)} = \frac{5}{4} = 1,25$ \\
 
 \newpage
 
-De tijdsvertraging (aangezien het om een aangelegde stap gaat heeft die geen andere effecten dan een vertraging) die we hebben ingevoerd is om het systeem eerst te laten stabiliseren op $9,5^\circ$C voordat we de stap aanleggen. Dit is ook duidelijk te zien aan de stap responsie, de figuur gaat eerst tot 9,5 graden om dan stabiel te blijven tot aan 60s (de ingevoerde vertraging).\\
-Na een zekere tijd zien we dat de figuur stabiliseert op $14,5^\circ$C. Dit wil zeggen dat we voor een aangelegde stap een stijging hebben van $14,5^\circ$C$ - 9,5^\circ$C$ = 5^\circ$C hebben. Dus K\textsubscript{p} heeft een waarde van 5. \\
-
-De totale versterking is in dit geval $K = K\textsubscript{r} * K\textsubscript{p} = 6,25$. En hiermee kunnen we ook de standfout $\varepsilon\textsubscript{ss}$ berekenen. \\
-$\varepsilon\textsubscript{ss} = \frac{1}{1+K} = \frac{1}{1+6,25} = 0,138 = 13,8\%$\\
-
+\noindent De tijdsvertraging die we hebben ingevoerd is om het systeem eerst te laten stabiliseren op $9,5^\circ$C voordat we de stap aanleggen. Dit is ook duidelijk te zien aan de stap responsie, de figuur gaat eerst tot 9,5 graden om dan stabiel te blijven tot aan 60s (de ingevoerde vertraging).\\
+Na een zekere tijd zien we dat de figuur stabiliseert op $14,5^\circ$C. Dit wil zeggen dat we voor een aangelegde stap een stijging hebben van $14,5^\circ$C$ - 9,5^\circ$C$ = 5^\circ$C hebben. Dus K\textsubscript{p} heeft een waarde van 5. \\ \\
+De totale versterking is in dit geval $K = K\textsubscript{r} * K\textsubscript{p} = 6,25$. En hiermee kunnen we ook de standfout $\varepsilon\textsubscript{ss}$ berekenen.
+\begin{equation}
+	\varepsilon\textsubscript{ss} = \frac{1}{1+K} = \frac{1}{1+6,25} = 0,138 = 13,8\%
+\end{equation}
 Om de standfout te controleren hebben we de instelwaarde veranderd naar $30^\circ$. Dit omdat men bij $22^\circ$ geen standfout heeft. Hieruit kunnen we besluiten dat 22 het nulpunt is van het systeem. \\
-
 \begin{figure}[!h]
 	\includegraphics[width=1\linewidth]{Labo4_1_step_response_kamer_standfout.jpg}
 	\caption {Het regelsysteem met een instelwaarde van $30^\circ$C}
@@ -83,8 +83,10 @@ Om de standfout te controleren hebben we de instelwaarde veranderd naar $30^\cir
 
 \newpage
 
-In figuur \ref{fig:standfout} zien we de reactie van de kamer met het regelsysteem voor een instelwaarde van 30, doordat het systeem zich niet stabiliseert op deze 30 kunnen we besluiten dat er een standfout heerst. Het systeem stabiliseert zich dus niet op 30 maar op 28,9.\\
-$\varepsilon\textsubscript{ss} = \frac{30-28,9}{30-22} = 0,138 = 13,8\%$\\
+\noindent In figuur \ref{fig:standfout} zien we de reactie van de kamer met het regelsysteem voor een instelwaarde van 30, doordat het systeem zich niet stabiliseert op deze 30 kunnen we besluiten dat er een standfout heerst. Het systeem stabiliseert zich dus niet op 30 maar op 28,9.
+\begin{equation}
+	\varepsilon\textsubscript{ss} = \frac{30-28,9}{30-22} = 0,138 = 13,8\%
+\end{equation}
 Dus ook via een experimentele methode komen we uit op een standfout van 13,8\%.
 
 \subsection{Pas de fuzzyficatiecurven aan zodanig dat de ingangs/uitgangskarakteristiek van de regelaar overeenstemt met figuur 1b of 1c}
@@ -141,14 +143,14 @@ Om figuur 1b te bekomen doen we de volgenden instellingen:
 	\includegraphics[width=1\linewidth]{Labo4_1_rechte.jpg}
 	\caption{3 rechte lijnstukken}
 \end{figure}
-
+\noindent
+Met de huidige 3 masks is het onmogelijk om 3 rechten met verschillende richtingscoëfficiënten te tekenen. Dit omdat de rechte lijnstukken ontstaan door de sommatie van enerzijds de 'te warm' en het linkse deel van de 'goed' curve en anderzijds door de sommatie van de 'te koud' en het rechtse deel van de 'goed' curve.
 \newpage
 
-\section{aanpassingen}
+\section{Aanpassingen aan het systeem}
 
-Hoe moeten we het regelschema aanpassen en de fuzzyregels aanpassen om de standfout te elimineren? \\
-
-Een standfout elimineren is vrij simpel. Dit kunnen we doen door ergens in het schema een zuiver integrator bij te plaatsen. Deze zou de standfout te niet moeten doen.
+Hoe moeten we het regelschema aanpassen en de fuzzyregels aanpassen om de standfout te elimineren? \\ \\
+Een standfout elimineren is vrij simpel en analoog aan andere systemen. Dit kunnen we doen door ergens in het schema een zuiver integrator bij te plaatsen. Deze zou de standfout teniet moeten doen. 
 
 \begin{figure}[!h]
 	\includegraphics[width=1\linewidth]{Labo4_1_system_no_error.jpg}
@@ -157,7 +159,7 @@ Een standfout elimineren is vrij simpel. Dit kunnen we doen door ergens in het s
 
 \begin{figure}[!h]
 	\includegraphics[width=1\linewidth]{Labo4_1_temperatuur_no_stand_fout.jpg}
-	\caption{De reactie van het regelsysteem met integrator dus zonder standfout}
+	\caption{De reactie van het regelsysteem met integrator (zonder standfout)}
 \end{figure}
 
 \end{document}
