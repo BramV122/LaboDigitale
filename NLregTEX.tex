@@ -237,8 +237,6 @@ Dit leverde het linkse deel van figuur \ref{schema2sub}.
 \end{equation}
 Hierbij stelt $U$ de uitgang van het eerste systeem voor. Deze vergelijking geldt voor het rechtse deel van het subsysteem. De originele uitgangen $z(t)$ en $y(t)$ werden niet gebruikt. De ingangen $int1$ en $int2$ stellen de beginwaarden van de integrators voor. Op deze manier konden deze parameters vanuit de top-level module eenvoudig gewijzigd worden. \\ \\
 Figuren \ref{xynohysopgave2} en \ref{xyhysopgave2} stellen de fasetrajecten voor dit systeem voor bij af- en aanwezigheid van hysteresis. Figuren \ref{tijdnohysopgave2} en \ref{tijdhysopgave2} stellen de tijdsresponsen voor. De verklaring voor de fasetrajecten en het tijdsverloop is analoog aan deze van de vorige opgave. Het fundamentele verschil is de aanwezigheid van een driehoekcurve in plaats van een sinuscurve. Dit verschil valt te verklaren doordat er hier gewerkt wordt met een tweede orde systeem.
-\subsection{Analyse van de hogere harmonischen}
-
 \begin{figure}[!h]
 	\centering
 	\includegraphics[height=0.4\textheight, keepaspectratio]{xynohysopgave2.png}
@@ -263,8 +261,17 @@ Figuren \ref{xynohysopgave2} en \ref{xyhysopgave2} stellen de fasetrajecten voor
 	\caption{Tijdsverloop (4 seconden) (hysteresis $\pm 0.2$)}
 	\label{tijdhysopgave2}
 \end{figure}
-
-
+\clearpage
+\subsection{Analyse van de hogere harmonischen}
+Om het systeem te analyseren werd er een FFT analyse uitgevoerd op de output $y(t)$. Deze werd gediscretiseerd met behulp van een zero-order-hold operatie. Dit met een samplefrequentie van $f_s = 100Hz$. Het resultaat wordt getoond in figuur \ref{spectrum}. \\ \\
+De eerste harmonische is de frequentie waarop het aan/uit element schakelt. Let op dat deze FFT-operatie werd uitgevoerd op de regelkring waarbij het aan/uit element een hysteresisbreedte heeft van $\pm0.2$. Uit figuur \ref{tijdhysopgave2} wordt afgeleid dat de frequentie waarop dit element schakelt ongeveer $\frac{1}{0.8s} = 1.25Hz$. Deze waarde stemt overeen met de frequentie van de eerste piek. \\ \\
+Het valt op dat de overige harmonischen veel zwakker zijn dan de eerste harmonische. De derde harmonische heeft slechts een vermogen van $\pm 15 dBm$. De vijfde harmonische zit op ongeveer $3 dBm$. Hieruit kan men besluiten dat de eerste harmonische een redelijk goede benadering geeft voor het niet-lineaire element.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth, keepaspectratio]{spectrum.png}
+	\caption{FFT van $y(t)$ voor frequenties van $0$ tot $20Hz$}
+	\label{spectrum}
+\end{figure}
 
 
 
